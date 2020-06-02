@@ -360,3 +360,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 *.exe
+*.lst

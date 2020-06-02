@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29911.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LilCompiler", "LilCompiler\LilCompiler.csproj", "{54FAA326-801F-4FA7-B949-B8B1E80F9A67}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{54FAA326-801F-4FA7-B949-B8B1E80F9A67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54FAA326-801F-4FA7-B949-B8B1E80F9A67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54FAA326-801F-4FA7-B949-B8B1E80F9A67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54FAA326-801F-4FA7-B949-B8B1E80F9A67}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1474D8AC-AC27-4EBE-AE74-DE3C82C57977}
+	EndGlobalSection
+EndGlobal
