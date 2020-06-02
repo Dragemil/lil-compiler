@@ -6,7 +6,7 @@
 //
 //  GPLEX Version:  1.2.2
 //  Machine:  DESKTOP-BGFGHK4
-//  DateTime: 02.06.2020 12:49:25
+//  DateTime: 02.06.2020 13:49:52
 //  UserName: drage
 //  GPLEX input file <mini.lex - 02.06.2020 12:40:26>
 //  GPLEX frame file <embedded resource>

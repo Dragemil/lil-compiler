@@ -1,8 +1,9 @@
 program
 {
+    write 3;
     int a;
-
-    write 5;
+    a = 5;
+    write a;
 }
 
  

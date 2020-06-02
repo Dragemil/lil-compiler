@@ -36,7 +36,7 @@ decl      : BoolDecl Ident Semicolon
           ;
 
 prog      : stmnt prog
-          | CloseCurl
+          | CloseCurl { YYACCEPT; }
           ;
 
 stmnt     : exp Semicolon

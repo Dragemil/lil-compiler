@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  DESKTOP-BGFGHK4
-// DateTime: 02.06.2020 12:53:11
+// DateTime: 02.06.2020 13:50:04
 // UserName: drage
-// Input file <mini.y - 02.06.2020 12:52:43>
+// Input file <mini.y - 02.06.2020 13:44:08>
 
 // options: lines gplex
 
@@ -150,6 +150,11 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
       case 7: // decl -> DoubleDecl, Ident, Semicolon
 #line 35 "mini.y"
                { Compiler.code.Add(new DeclIdentNode(ValueStack[ValueStack.Depth-2].val, CType.Double)); }
+#line default
+        break;
+      case 9: // prog -> CloseCurl
+#line 39 "mini.y"
+                      { YYAccept(); }
 #line default
         break;
       case 10: // stmnt -> exp, Semicolon
