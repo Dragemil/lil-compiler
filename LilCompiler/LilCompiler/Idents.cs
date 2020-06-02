@@ -14,15 +14,10 @@ public class IdentLeaf : SyntaxNode
             new Error($"Attempted to resolve undeclared variable {s}");
         }
 
-        if (!Compiler.variables[s].assigned)
-        {
-            new Error($"Attempted to resolve unassigned variable {s}");
-        }
-
         id = s;
     }
 
-    public override CType CheckType() => Compiler.variables[id].type;
+    public override CType CheckType() => Compiler.variables[id];
 
     public override void GenCode()
     {
@@ -32,17 +27,40 @@ public class IdentLeaf : SyntaxNode
 
 public class DeclIdentNode : SyntaxNode
 {
-    public DeclIdentNode(string id, CType type)
+    string id;
+    CType type;
+
+    public DeclIdentNode(string i, CType t)
     {
-        if (Compiler.variables.ContainsKey(id))
+        if (Compiler.variables.ContainsKey(i))
         {
-            new Error($"Variable {id} already declared");
+            new Error($"Variable {i} already declared");
+        }
+        else
+        {
+            Compiler.variables.Add(i, t);
         }
 
-        Compiler.variables.Add(id, new Variable(type));
+        type = t;
+        id = i;
     }
 
     public override void GenCode()
-    { }
+    {
+        switch (type)
+        {
+            case CType.Int:
+                EmitCode("ldc.i4 {0}", 0);
+                EmitCode("stloc _{0}", id);
+                break;
+            case CType.Double:
+                EmitCode("ldc.i4 {0}", 0.0d);
+                EmitCode("stloc _{0}", id);
+                break;
+            case CType.Bool:
+                EmitCode("ldc.i4 {0}", 0);
+                EmitCode("stloc _{0}", id);
+                break;
+        }
+    }
 }
-

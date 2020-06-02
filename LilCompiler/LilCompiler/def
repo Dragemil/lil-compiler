@@ -1,0 +1,8 @@
+program
+{
+    int a;
+
+    write 5;
+}
+
+ 

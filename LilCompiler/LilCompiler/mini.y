@@ -20,11 +20,11 @@ public SyntaxNode  node;
 
 %%
 
-start     : Program OpenCurl decllist
+start     : Program OpenCurl decllist Eof
           ;
 
-decllist  : decl decllist
-          | prog
+decllist  : decl decllist 
+          | prog 
           ;
 
 decl      : BoolDecl Ident Semicolon
@@ -36,7 +36,7 @@ decl      : BoolDecl Ident Semicolon
           ;
 
 prog      : stmnt prog
-          | CloseCurl Eof
+          | CloseCurl
           ;
 
 stmnt     : exp Semicolon
@@ -47,8 +47,6 @@ stmnt     : exp Semicolon
           | Write exp Semicolon
                { Compiler.code.Add(new WriteNode($2)); }
           ;
-
-
 
 exp       : term
                { $$ = $1; }

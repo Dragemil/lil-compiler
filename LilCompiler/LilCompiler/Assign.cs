@@ -17,7 +17,7 @@ class AssignNode : SyntaxNode
             throw new ErrorException($"Attempted to assign to undeclared variable {i}");
         }
 
-        var idType = Compiler.variables[i].type;
+        var idType = Compiler.variables[i];
         var expType = e.CheckType();
 
         if (idType != expType && !(idType == CType.Double && expType == CType.Int))
@@ -25,15 +25,13 @@ class AssignNode : SyntaxNode
             new Error($"Cannot assign {expType} to {idType}");
         }
 
-        Compiler.variables[i].assigned = true;
-
         id = i;
         exp = e;
     }
 
     public override CType CheckType()
     {
-        var idType = Compiler.variables[id].type;
+        var idType = Compiler.variables[id];
         var expType = exp.CheckType();
 
         if (idType != expType || (idType != CType.Double && expType != CType.Int))
@@ -48,7 +46,7 @@ class AssignNode : SyntaxNode
     {
         exp.GenCode();
 
-        if (Compiler.variables[id].type == CType.Double && exp.CheckType() == CType.Int)
+        if (Compiler.variables[id] == CType.Double && exp.CheckType() == CType.Int)
         {
             EmitCode("conv.r8");
         }

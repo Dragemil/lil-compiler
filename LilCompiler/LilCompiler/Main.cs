@@ -10,8 +10,8 @@ public class Compiler
 
     public static List<SyntaxNode> code = new List<SyntaxNode>();
 
-    public static Dictionary<string, Variable> variables =
-        new Dictionary<string, Variable>();
+    public static Dictionary<string, CType> variables =
+        new Dictionary<string, CType>();
 
     // arg[0] określa plik źródłowy
     // pozostałe argumenty są ignorowane
@@ -110,7 +110,7 @@ public class Compiler
 
         foreach(var variable in variables)
         {
-            switch (variable.Value.type)
+            switch (variable.Value)
             {
                 case CType.Bool:
                     EmitCode($".locals init ( bool _{variable.Key} )");
