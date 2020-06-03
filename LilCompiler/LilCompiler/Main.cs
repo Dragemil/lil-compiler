@@ -86,6 +86,7 @@ public class Compiler
 
         foreach(var root in code)
         {
+            if (root is ReturnNode) break;
             root.GenCode();
         }
 
@@ -176,6 +177,12 @@ public class SemicolonNode : SyntaxNode
     {
         EmitCode("pop");
     }
+}
+
+public class ReturnNode : SyntaxNode
+{
+    public override void GenCode()
+    { }
 }
 
 public class Error

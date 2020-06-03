@@ -5,10 +5,9 @@ program
     double c;
 
     read a;
-    read b;
-    read c;
 
     write a;
+    return;
     write b;
     write c;
 }

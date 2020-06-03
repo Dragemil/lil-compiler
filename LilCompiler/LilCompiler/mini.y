@@ -44,6 +44,8 @@ stmnt     : exp Semicolon
                Compiler.code.Add($1);
                Compiler.code.Add(new SemicolonNode());
                }
+          | Return Semicolon
+               { Compiler.code.Add(new ReturnNode()); }
           | Write StringVal Semicolon
                { Compiler.code.Add(new WriteStrNode($2)); }
           | Write exp Semicolon
