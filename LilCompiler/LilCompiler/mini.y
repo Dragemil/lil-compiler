@@ -44,8 +44,12 @@ stmnt     : exp Semicolon
                Compiler.code.Add($1);
                Compiler.code.Add(new SemicolonNode());
                }
+          | Write StringVal Semicolon
+               { Compiler.code.Add(new WriteStrNode($2)); }
           | Write exp Semicolon
                { Compiler.code.Add(new WriteNode($2)); }
+          | Read Ident Semicolon
+               { Compiler.code.Add(new ReadNode($2)); }
           ;
 
 exp       : term

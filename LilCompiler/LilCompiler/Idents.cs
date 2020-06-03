@@ -54,7 +54,7 @@ public class DeclIdentNode : SyntaxNode
                 EmitCode("stloc _{0}", id);
                 break;
             case CType.Double:
-                EmitCode("ldc.i4 {0}", 0.0d);
+                EmitCode("ldc.r8 {0}", 0.0d);
                 EmitCode("stloc _{0}", id);
                 break;
             case CType.Bool:
