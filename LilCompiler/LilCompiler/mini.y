@@ -16,7 +16,7 @@ public SyntaxNode  node;
 %token IntDecl DoubleDecl BoolDecl Error Return
 %token <val> True False Ident IntNum DoubleNum StringVal
 
-%type <node> exp term stmnt decl prog decllist
+%type <node> decllist decl prog stmnt exp unar term
 
 %%
 
@@ -54,13 +54,21 @@ stmnt     : exp Semicolon
                { Compiler.code.Add(new ReadNode($2)); }
           ;
 
-exp       : term
+exp       : unar
                { $$ = $1; }
           | Ident Assign exp
                { $$ = new AssignNode($1, $3); }
           ;
 
-term      : True
+unar      : term
+          | OpenPar IntDecl ClosePar unar
+               { $$ = new IntConversionNode($4); }
+          | OpenPar DoubleDecl ClosePar unar
+               { $$ = new DoubleConversionNode($4); }
+          ;
+
+term      : OpenPar exp ClosePar
+          | True
                { $$ = new ConstBoolLeaf(true); }
           | False
                { $$ = new ConstBoolLeaf(false); }

@@ -4,9 +4,9 @@ program
     bool b;
     double c;
 
-    read a;
+    a = 5;
 
-    write a;
+    write (double)a;
     return;
     write b;
     write c;

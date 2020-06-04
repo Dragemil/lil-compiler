@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  DESKTOP-BGFGHK4
-// DateTime: 03.06.2020 11:22:54
+// DateTime: 04.06.2020 20:40:47
 // UserName: drage
-// Input file <mini.y - 03.06.2020 11:22:16>
+// Input file <mini.y - 04.06.2020 20:40:18>
 
 // options: lines gplex
 
@@ -60,21 +60,21 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
 #pragma warning restore 649
-  private static Rule[] rules = new Rule[22];
-  private static State[] states = new State[42];
+  private static Rule[] rules = new Rule[26];
+  private static State[] states = new State[53];
   private static string[] nonTerms = new string[] {
-      "exp", "term", "stmnt", "decl", "prog", "decllist", "start", "$accept", 
+      "decllist", "decl", "prog", "stmnt", "exp", "unar", "term", "start", "$accept", 
       };
 
   static Parser() {
-    states[0] = new State(new int[]{4,3},new int[]{-7,1});
+    states[0] = new State(new int[]{4,3},new int[]{-8,1});
     states[1] = new State(new int[]{3,2});
     states[2] = new State(-1);
     states[3] = new State(new int[]{31,4});
-    states[4] = new State(new int[]{35,9,33,12,34,15,38,24,39,25,41,26,42,27,40,28,37,31,9,33,8,38,32,41},new int[]{-6,5,-4,7,-5,18,-3,19,-1,21,-2,23});
+    states[4] = new State(new int[]{35,9,33,12,34,15,29,25,38,31,39,32,41,33,42,34,40,39,37,42,9,44,8,49,32,52},new int[]{-1,5,-2,7,-3,18,-4,19,-5,21,-6,23,-7,24});
     states[5] = new State(new int[]{12,6});
     states[6] = new State(-2);
-    states[7] = new State(new int[]{35,9,33,12,34,15,38,24,39,25,41,26,42,27,40,28,37,31,9,33,8,38,32,41},new int[]{-6,8,-4,7,-5,18,-3,19,-1,21,-2,23});
+    states[7] = new State(new int[]{35,9,33,12,34,15,29,25,38,31,39,32,41,33,42,34,40,39,37,42,9,44,8,49,32,52},new int[]{-1,8,-2,7,-3,18,-4,19,-5,21,-6,23,-7,24});
     states[8] = new State(-3);
     states[9] = new State(new int[]{40,10});
     states[10] = new State(new int[]{10,11});
@@ -86,53 +86,68 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
     states[16] = new State(new int[]{10,17});
     states[17] = new State(-7);
     states[18] = new State(-4);
-    states[19] = new State(new int[]{38,24,39,25,41,26,42,27,40,28,37,31,9,33,8,38,32,41},new int[]{-5,20,-3,19,-1,21,-2,23});
+    states[19] = new State(new int[]{29,25,38,31,39,32,41,33,42,34,40,39,37,42,9,44,8,49,32,52},new int[]{-3,20,-4,19,-5,21,-6,23,-7,24});
     states[20] = new State(-8);
     states[21] = new State(new int[]{10,22});
     states[22] = new State(-10);
     states[23] = new State(-15);
     states[24] = new State(-17);
-    states[25] = new State(-18);
-    states[26] = new State(-19);
+    states[25] = new State(new int[]{33,28,34,36,29,25,38,31,39,32,41,33,42,34,40,39},new int[]{-5,26,-6,23,-7,24});
+    states[26] = new State(new int[]{30,27});
     states[27] = new State(-20);
-    states[28] = new State(new int[]{11,29,10,-21});
-    states[29] = new State(new int[]{38,24,39,25,41,26,42,27,40,28},new int[]{-1,30,-2,23});
-    states[30] = new State(-16);
-    states[31] = new State(new int[]{10,32});
-    states[32] = new State(-11);
-    states[33] = new State(new int[]{43,34,38,24,39,25,41,26,42,27,40,28},new int[]{-1,36,-2,23});
-    states[34] = new State(new int[]{10,35});
-    states[35] = new State(-12);
-    states[36] = new State(new int[]{10,37});
-    states[37] = new State(-13);
-    states[38] = new State(new int[]{40,39});
-    states[39] = new State(new int[]{10,40});
-    states[40] = new State(-14);
-    states[41] = new State(-9);
+    states[28] = new State(new int[]{30,29});
+    states[29] = new State(new int[]{29,25,38,31,39,32,41,33,42,34,40,35},new int[]{-6,30,-7,24});
+    states[30] = new State(-18);
+    states[31] = new State(-21);
+    states[32] = new State(-22);
+    states[33] = new State(-23);
+    states[34] = new State(-24);
+    states[35] = new State(-25);
+    states[36] = new State(new int[]{30,37});
+    states[37] = new State(new int[]{29,25,38,31,39,32,41,33,42,34,40,35},new int[]{-6,38,-7,24});
+    states[38] = new State(-19);
+    states[39] = new State(new int[]{11,40,10,-25,30,-25});
+    states[40] = new State(new int[]{29,25,38,31,39,32,41,33,42,34,40,39},new int[]{-5,41,-6,23,-7,24});
+    states[41] = new State(-16);
+    states[42] = new State(new int[]{10,43});
+    states[43] = new State(-11);
+    states[44] = new State(new int[]{43,45,29,25,38,31,39,32,41,33,42,34,40,39},new int[]{-5,47,-6,23,-7,24});
+    states[45] = new State(new int[]{10,46});
+    states[46] = new State(-12);
+    states[47] = new State(new int[]{10,48});
+    states[48] = new State(-13);
+    states[49] = new State(new int[]{40,50});
+    states[50] = new State(new int[]{10,51});
+    states[51] = new State(-14);
+    states[52] = new State(-9);
 
     for (int sNo = 0; sNo < states.Length; sNo++) states[sNo].number = sNo;
 
-    rules[1] = new Rule(-8, new int[]{-7,3});
-    rules[2] = new Rule(-7, new int[]{4,31,-6,12});
-    rules[3] = new Rule(-6, new int[]{-4,-6});
-    rules[4] = new Rule(-6, new int[]{-5});
-    rules[5] = new Rule(-4, new int[]{35,40,10});
-    rules[6] = new Rule(-4, new int[]{33,40,10});
-    rules[7] = new Rule(-4, new int[]{34,40,10});
-    rules[8] = new Rule(-5, new int[]{-3,-5});
-    rules[9] = new Rule(-5, new int[]{32});
-    rules[10] = new Rule(-3, new int[]{-1,10});
-    rules[11] = new Rule(-3, new int[]{37,10});
-    rules[12] = new Rule(-3, new int[]{9,43,10});
-    rules[13] = new Rule(-3, new int[]{9,-1,10});
-    rules[14] = new Rule(-3, new int[]{8,40,10});
-    rules[15] = new Rule(-1, new int[]{-2});
-    rules[16] = new Rule(-1, new int[]{40,11,-1});
-    rules[17] = new Rule(-2, new int[]{38});
-    rules[18] = new Rule(-2, new int[]{39});
-    rules[19] = new Rule(-2, new int[]{41});
-    rules[20] = new Rule(-2, new int[]{42});
-    rules[21] = new Rule(-2, new int[]{40});
+    rules[1] = new Rule(-9, new int[]{-8,3});
+    rules[2] = new Rule(-8, new int[]{4,31,-1,12});
+    rules[3] = new Rule(-1, new int[]{-2,-1});
+    rules[4] = new Rule(-1, new int[]{-3});
+    rules[5] = new Rule(-2, new int[]{35,40,10});
+    rules[6] = new Rule(-2, new int[]{33,40,10});
+    rules[7] = new Rule(-2, new int[]{34,40,10});
+    rules[8] = new Rule(-3, new int[]{-4,-3});
+    rules[9] = new Rule(-3, new int[]{32});
+    rules[10] = new Rule(-4, new int[]{-5,10});
+    rules[11] = new Rule(-4, new int[]{37,10});
+    rules[12] = new Rule(-4, new int[]{9,43,10});
+    rules[13] = new Rule(-4, new int[]{9,-5,10});
+    rules[14] = new Rule(-4, new int[]{8,40,10});
+    rules[15] = new Rule(-5, new int[]{-6});
+    rules[16] = new Rule(-5, new int[]{40,11,-5});
+    rules[17] = new Rule(-6, new int[]{-7});
+    rules[18] = new Rule(-6, new int[]{29,33,30,-6});
+    rules[19] = new Rule(-6, new int[]{29,34,30,-6});
+    rules[20] = new Rule(-7, new int[]{29,-5,30});
+    rules[21] = new Rule(-7, new int[]{38});
+    rules[22] = new Rule(-7, new int[]{39});
+    rules[23] = new Rule(-7, new int[]{41});
+    rules[24] = new Rule(-7, new int[]{42});
+    rules[25] = new Rule(-7, new int[]{40});
   }
 
   protected override void Initialize() {
@@ -195,7 +210,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
                { Compiler.code.Add(new ReadNode(ValueStack[ValueStack.Depth-2].val)); }
 #line default
         break;
-      case 15: // exp -> term
+      case 15: // exp -> unar
 #line 58 "mini.y"
                { CurrentSemanticValue.node = ValueStack[ValueStack.Depth-1].node; }
 #line default
@@ -205,28 +220,38 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
                { CurrentSemanticValue.node = new AssignNode(ValueStack[ValueStack.Depth-3].val, ValueStack[ValueStack.Depth-1].node); }
 #line default
         break;
-      case 17: // term -> True
-#line 64 "mini.y"
+      case 18: // unar -> OpenPar, IntDecl, ClosePar, unar
+#line 65 "mini.y"
+               { CurrentSemanticValue.node = new IntConversionNode(ValueStack[ValueStack.Depth-1].node); }
+#line default
+        break;
+      case 19: // unar -> OpenPar, DoubleDecl, ClosePar, unar
+#line 67 "mini.y"
+               { CurrentSemanticValue.node = new DoubleConversionNode(ValueStack[ValueStack.Depth-1].node); }
+#line default
+        break;
+      case 21: // term -> True
+#line 72 "mini.y"
                { CurrentSemanticValue.node = new ConstBoolLeaf(true); }
 #line default
         break;
-      case 18: // term -> False
-#line 66 "mini.y"
+      case 22: // term -> False
+#line 74 "mini.y"
                { CurrentSemanticValue.node = new ConstBoolLeaf(false); }
 #line default
         break;
-      case 19: // term -> IntNum
-#line 68 "mini.y"
+      case 23: // term -> IntNum
+#line 76 "mini.y"
                { CurrentSemanticValue.node = new ConstIntLeaf(int.Parse(ValueStack[ValueStack.Depth-1].val)); }
 #line default
         break;
-      case 20: // term -> DoubleNum
-#line 70 "mini.y"
+      case 24: // term -> DoubleNum
+#line 78 "mini.y"
                { CurrentSemanticValue.node = new ConstDoubleLeaf(double.Parse(ValueStack[ValueStack.Depth-1].val,System.Globalization.CultureInfo.InvariantCulture)); }
 #line default
         break;
-      case 21: // term -> Ident
-#line 72 "mini.y"
+      case 25: // term -> Ident
+#line 80 "mini.y"
                { CurrentSemanticValue.node = new IdentLeaf(ValueStack[ValueStack.Depth-1].val); }
 #line default
         break;
@@ -244,7 +269,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
         return CharToString((char)terminal);
   }
 
-#line 76 "mini.y"
+#line 84 "mini.y"
 
 public Parser(Scanner scanner) : base(scanner) { }
 
