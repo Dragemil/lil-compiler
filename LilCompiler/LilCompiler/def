@@ -5,10 +5,12 @@ program
     double c;
 
     a = 5;
+    a = -~-a;
+    b = !!!b;
 
-    write (double)a;
-    return;
+    write (double)(a & -a);
     write b;
+    return;
     write c;
 }
 

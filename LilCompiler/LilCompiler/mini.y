@@ -16,7 +16,7 @@ public SyntaxNode  node;
 %token IntDecl DoubleDecl BoolDecl Error Return
 %token <val> True False Ident IntNum DoubleNum StringVal
 
-%type <node> decllist decl prog stmnt exp unar term
+%type <node> decllist decl prog stmnt exp bit unar term
 
 %%
 
@@ -54,10 +54,17 @@ stmnt     : exp Semicolon
                { Compiler.code.Add(new ReadNode($2)); }
           ;
 
-exp       : unar
+exp       : bit
                { $$ = $1; }
           | Ident Assign exp
                { $$ = new AssignNode($1, $3); }
+          ;
+
+bit       : unar
+          | bit BitOr unar
+               { $$ = new BitOrNode($1, $3); }
+          | bit BitAnd unar
+               { $$ = new BitAndNode($1, $3); }
           ;
 
 unar      : term
@@ -65,9 +72,16 @@ unar      : term
                { $$ = new IntConversionNode($4); }
           | OpenPar DoubleDecl ClosePar unar
                { $$ = new DoubleConversionNode($4); }
+          | Minus unar
+               { $$ = new NegNode($2); }
+          | Not unar
+               { $$ = new BoolNegNode($2); }
+          | BitNot unar
+               { $$ = new BitNegNode($2); }
           ;
 
 term      : OpenPar exp ClosePar
+               { $$ = $2; }
           | True
                { $$ = new ConstBoolLeaf(true); }
           | False

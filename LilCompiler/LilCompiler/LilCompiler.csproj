@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assign.cs" />
+    <Compile Include="Bit.cs" />
     <Compile Include="Consts.cs" />
     <Compile Include="Idents.cs" />
     <Compile Include="IO.cs" />
