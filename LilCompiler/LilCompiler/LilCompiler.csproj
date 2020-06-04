@@ -49,16 +49,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assign.cs" />
-    <Compile Include="Bit.cs" />
+    <Compile Include="Operators\Assign.cs" />
+    <Compile Include="Operators\BinaryOperationNode.cs" />
+    <Compile Include="Operators\Bit.cs" />
     <Compile Include="Consts.cs" />
     <Compile Include="Idents.cs" />
     <Compile Include="IO.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="mini.cs" />
+    <Compile Include="Operators\Calculation.cs" />
+    <Compile Include="Operators\Logical.cs" />
+    <Compile Include="Operators\Relation.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Unars.cs" />
+    <Compile Include="Operators\Unars.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -62,7 +62,7 @@ public class NegNode : SyntaxNode
     {
         if (ex.CheckType() == CType.Bool)
         {
-            new Error("Attempted negation on a bool type");
+            new Error("Attempted negation on a non number type");
         }
 
         exp = ex;

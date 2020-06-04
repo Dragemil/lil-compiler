@@ -107,7 +107,7 @@ public class Compiler
         EmitCode("// prolog");
         
         EmitCode(".locals init ( float64 ftemp )");
-        EmitCode(".locals init ( float64 btemp )");
+        EmitCode(".locals init ( int32 btemp )");
 
         foreach(var variable in variables)
         {

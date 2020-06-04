@@ -16,7 +16,7 @@ public SyntaxNode  node;
 %token IntDecl DoubleDecl BoolDecl Error Return
 %token <val> True False Ident IntNum DoubleNum StringVal
 
-%type <node> decllist decl prog stmnt exp bit unar term
+%type <node> decllist decl prog stmnt exp log rel comp factor bit unar term
 
 %%
 
@@ -54,10 +54,45 @@ stmnt     : exp Semicolon
                { Compiler.code.Add(new ReadNode($2)); }
           ;
 
-exp       : bit
-               { $$ = $1; }
+exp       : log
           | Ident Assign exp
                { $$ = new AssignNode($1, $3); }
+          ;
+
+log       : rel
+          | log Or rel
+               { $$ = new OrNode($1, $3); }
+          | log And rel
+               { $$ = new AndNode($1, $3); }
+          ;
+
+rel       : comp
+          | rel Equality comp
+               { $$ = new EqualityNode($1, $3); }
+          | rel NotEquality comp
+               { $$ = new NotEqualityNode($1, $3); }
+          | rel Greater comp
+               { $$ = new GreaterNode($1, $3); }
+          | rel GreaterOrE comp
+               { $$ = new GreaterOrEqualNode($1, $3); }
+          | rel Less comp
+               { $$ = new LessNode($1, $3); }
+          | rel LessOrE comp
+               { $$ = new LessOrEqualNode($1, $3); }
+          ;
+
+comp      : factor
+          | comp Plus factor
+               { $$ = new AdditionNode($1, $3); }
+          | comp Minus factor
+               { $$ = new SubtractionNode($1, $3); }
+          ;
+
+factor    : bit
+          | factor Multiplies bit
+               { $$ = new MultiplicationNode($1, $3); }
+          | factor Divides bit
+               { $$ = new DivisionNode($1, $3); }
           ;
 
 bit       : unar
