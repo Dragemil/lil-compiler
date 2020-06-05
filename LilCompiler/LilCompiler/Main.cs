@@ -13,6 +13,9 @@ public class Compiler
     public static Dictionary<string, CType> variables =
         new Dictionary<string, CType>();
 
+    private static int labelNum = 0;
+    private static string label = null;
+
     // arg[0] określa plik źródłowy
     // pozostałe argumenty są ignorowane
     public static int Main(string[] args)
@@ -80,13 +83,37 @@ public class Compiler
 
     public static void EmitCode(string instr = null)
     {
-        sw.WriteLine(instr);
+        if (label is string lbl)
+        {
+            sw.WriteLine($"{lbl}: {instr}");
+            label = null;
+        }
+        else
+        {
+            sw.WriteLine(instr);
+        }
     }
 
     public static void EmitCode(string instr, params object[] args)
     {
-        sw.WriteLine(instr, args);
+        if (label is string lbl)
+        {
+            sw.WriteLine($"{lbl}: {instr}", args);
+            label = null;
+        }
+        else
+        {
+            sw.WriteLine(instr, args);
+        }
     }
+
+    public static string NextLabel()
+    {
+        return string.Format("IL_{0:x}", labelNum++);
+    }
+
+    public static void AddLabel(string label)
+    { Compiler.label = label; }
 
     private static StreamWriter sw;
 

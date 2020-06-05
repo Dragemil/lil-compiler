@@ -6,13 +6,12 @@ program
 
     a = 5;
     a = -~-a;
-    b = !!!b; //let's go
+    b = !!b; //let's go
 
-    write a * a;
+    write b && b || b;
     { return; }
     write a * a + a / a - a == a || a > a;
     return;
     write c;
 }
 
- 

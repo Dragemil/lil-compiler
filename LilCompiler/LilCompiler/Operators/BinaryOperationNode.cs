@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 public abstract class BinaryOperationNode : SyntaxNode
 {
-    private string operation;
-    private SyntaxNode exp1;
-    private SyntaxNode exp2;
+    protected string operation;
+    protected SyntaxNode exp1;
+    protected SyntaxNode exp2;
 
     public BinaryOperationNode(SyntaxNode ex1, SyntaxNode ex2, string op)
     {

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
 public abstract class LogicalNode : BinaryOperationNode
 {
+    protected string label;
+
     public LogicalNode(SyntaxNode ex1, SyntaxNode ex2, string op, string opName)
         : base(ex1, ex2, op)
     {
@@ -14,6 +17,8 @@ public abstract class LogicalNode : BinaryOperationNode
         {
             new Error($"Attempted {opName} on a non bool type");
         }
+
+        label = Compiler.NextLabel();
     }
 
     public override CType CheckType()
@@ -27,6 +32,18 @@ public class OrNode : LogicalNode
     public OrNode(SyntaxNode ex1, SyntaxNode ex2)
         : base(ex1, ex2, "or", "bool or")
     { }
+
+    public override void GenCode()
+    {
+        exp1.GenCode();
+        EmitCode("stloc btemp");
+        EmitCode("ldloc btemp");
+        EmitCode("ldloc btemp");
+        EmitCode("brtrue.s {0}", label);
+        exp2.GenCode();
+        EmitCode(operation);
+        Compiler.AddLabel(label);
+    }
 }
 
 public class AndNode : LogicalNode
@@ -34,4 +51,16 @@ public class AndNode : LogicalNode
     public AndNode(SyntaxNode ex1, SyntaxNode ex2)
         : base(ex1, ex2, "and", "bool and")
     { }
+
+    public override void GenCode()
+    {
+        exp1.GenCode();
+        EmitCode("stloc btemp");
+        EmitCode("ldloc btemp");
+        EmitCode("ldloc btemp");
+        EmitCode("brfalse.s {0}", label);
+        exp2.GenCode();
+        EmitCode(operation);
+        Compiler.AddLabel(label);
+    }
 }
