@@ -16,7 +16,7 @@ public SyntaxNode  node;
 %token IntDecl DoubleDecl BoolDecl Error Return
 %token <val> True False Ident IntNum DoubleNum StringVal
 
-%type <node> decllist decl prog stmnt exp log rel comp factor bit unar term
+%type <node> decllist decl prog stmnt blckstmnt exp log rel comp factor bit unar term
 
 %%
 
@@ -28,30 +28,38 @@ decllist  : decl decllist
           ;
 
 decl      : BoolDecl Ident Semicolon
-               { Compiler.code.Add(new DeclIdentNode($2, CType.Bool)); }
+               { Compiler.AddStatement(new DeclIdentNode($2, CType.Bool)); }
           | IntDecl Ident Semicolon
-               { Compiler.code.Add(new DeclIdentNode($2, CType.Int)); }
+               { Compiler.AddStatement(new DeclIdentNode($2, CType.Int)); }
           | DoubleDecl Ident Semicolon
-               { Compiler.code.Add(new DeclIdentNode($2, CType.Double)); }
+               { Compiler.AddStatement(new DeclIdentNode($2, CType.Double)); }
           ;
 
 prog      : stmnt prog
-          | CloseCurl { YYACCEPT; }
+          | CloseCurl
+               { YYACCEPT; }
           ;
 
 stmnt     : exp Semicolon
                {
-               Compiler.code.Add($1);
-               Compiler.code.Add(new SemicolonNode());
+               Compiler.AddStatement($1);
+               Compiler.AddStatement(new SemicolonNode());
                }
+          | OpenCurl blckstmnt
+               { Compiler.scopes.Pop(); }
           | Return Semicolon
-               { Compiler.code.Add(new ReturnNode()); }
+               { Compiler.AddStatement(new ReturnNode()); }
           | Write StringVal Semicolon
-               { Compiler.code.Add(new WriteStrNode($2)); }
+               { Compiler.AddStatement(new WriteStrNode($2)); }
           | Write exp Semicolon
-               { Compiler.code.Add(new WriteNode($2)); }
+               { Compiler.AddStatement(new WriteNode($2)); }
           | Read Ident Semicolon
-               { Compiler.code.Add(new ReadNode($2)); }
+               { Compiler.AddStatement(new ReadNode($2)); }
+          ;
+
+blckstmnt : stmnt blckstmnt
+          | CloseCurl
+               { Compiler.AddStatement(new ScopeNode()); }
           ;
 
 exp       : log

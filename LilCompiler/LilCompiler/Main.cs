@@ -8,7 +8,7 @@ public class Compiler
 {
     public static int errors = 0;
 
-    public static List<SyntaxNode> code = new List<SyntaxNode>();
+    public static Stack<ScopeNode> scopes = new Stack<ScopeNode>(new[] { new ScopeNode() });
 
     public static Dictionary<string, CType> variables =
         new Dictionary<string, CType>();
@@ -68,6 +68,16 @@ public class Compiler
         return errors == 0 ? 0 : 2;
     }
 
+    public static void AddStatement(SyntaxNode statement)
+    {
+        scopes.Peek().statements.Add(statement);
+
+        if (statement is ScopeNode scope)
+        {
+            scopes.Push(scope);
+        }
+    }
+
     public static void EmitCode(string instr = null)
     {
         sw.WriteLine(instr);
@@ -84,12 +94,13 @@ public class Compiler
     {
         GenProlog();
 
-        foreach(var root in code)
+        try
         {
-            if (root is ReturnNode) break;
-            root.GenCode();
+            scopes.Peek().GenCode();
         }
-
+        catch (ReturnException)
+        { }
+        
         GenEpilog();
     }
 
@@ -107,7 +118,7 @@ public class Compiler
         EmitCode("// prolog");
         
         EmitCode(".locals init ( float64 ftemp )");
-        EmitCode(".locals init ( int32 btemp )");
+        EmitCode(".locals init ( bool btemp )");
 
         foreach(var variable in variables)
         {
@@ -160,7 +171,6 @@ public class Variable
 
 public abstract class SyntaxNode
 {
-    public int line = -1;
     public virtual CType CheckType() => throw new ErrorException("Type checked on a statement");
     public abstract void GenCode();
 
@@ -169,6 +179,19 @@ public abstract class SyntaxNode
 
     protected static void EmitCode(string instr, params object[] args) =>
         Compiler.EmitCode(instr, args);
+}
+
+public class ScopeNode : SyntaxNode
+{
+    public List<SyntaxNode> statements = new List<SyntaxNode>();
+
+    public override void GenCode()
+    {
+        foreach (var statement in statements)
+        {
+            statement.GenCode();
+        }
+    }
 }
 
 public class SemicolonNode : SyntaxNode
@@ -182,8 +205,11 @@ public class SemicolonNode : SyntaxNode
 public class ReturnNode : SyntaxNode
 {
     public override void GenCode()
-    { }
+    { throw new ReturnException(); }
 }
+
+public class ReturnException : Exception
+{ }
 
 public class Error
 {

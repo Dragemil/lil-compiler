@@ -12,7 +12,7 @@ public abstract class CalculationNode : BinaryOperationNode
         if (ex1.CheckType() == CType.Bool
             || ex2.CheckType() == CType.Bool)
         {
-            new Error($"Attempted {opName} on a non int type");
+            new Error($"Attempted {opName} on a non number type");
         }
     }
 }

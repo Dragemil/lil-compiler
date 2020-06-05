@@ -8,7 +8,8 @@ program
     a = -~-a;
     b = !!!b;
 
-    write a * a + a / a - a;
+    write a * a;
+    { return; }
     write a * a + a / a - a == a || a > a;
     return;
     write c;
