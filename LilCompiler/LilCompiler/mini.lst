@@ -1,163 +1,80 @@
 
 // ==========================================================================
-//  GPPG error listing for yacc source file <mini.y - 05.06.2020 13:48:05>
+//  GPLEX error listing for lex source file <mini.lex>
 // ==========================================================================
-//  Version:  1.5.2
+//  Version:  1.2.2
 //  Machine:  DESKTOP-BGFGHK4
-//  DateTime: 05.06.2020 13:48:49
+//  DateTime: 05.06.2020 20:01:49
 //  UserName: drage
 // ==========================================================================
 
 
 
-// Uwaga: W wywoÅaniu generatora gppg naleÅ¼y uÅ¼yÄ opcji /gplex
-
+%using QUT.Gppg;
 %namespace GardensPoint
 
-%output=Parser.cs
-
-%union
-{
-public string      val;
-public SyntaxNode  node;
-}
-
-%token Program If Else While Read Write Semicolon Assign Eof Or And BitOr BitAnd Equality NotEquality Greater
-%token GreaterOrE Less LessOrE Plus Minus Multiplies Divides Not BitNot OpenPar ClosePar OpenCurl CloseCurl
-%token IntDecl DoubleDecl BoolDecl Error Return
-%token <val> True False Ident IntNum DoubleNum StringVal
-
-%type <node> decllist decl prog stmnt blockstmnt exp log rel comp factor bit unar term
+IntNum      ([1-9][0-9]*|0)
+DoubleNum   ([1-9][0-9]*|0)\.[0-9]+
+StringVal   \"[^\r\n]*\"
+Ident       [a-zA-Z][a-zA-Z0-9]*
+NewLine     (\r\n?|\n)
+Comment     //[^\r\n]*NewLine
 
 %%
-// Error: There are 1 non-terminating NonTerminal Symbols
-   //  {blockstmnt}
-// Warning: Terminating blockstmnt fixes the following size-1 NonTerminal set
-   // {blockstmnt}
-// Warning: NonTerminal symbol "blockstmnt" is unreachable
-// Error: NonTerminal symbol "blockstmnt" has no productions
-// --------------------------------------------------------------------------
+// Error: Parser error <Syntax error, unexpected %%, expecting verbatim, or pattern> 
+// Error: Unexpected symbol, skipping to  <%%> 
+// ----------------------------------------------------------------------------------
 
-start     : Program OpenCurl decllist Eof
-          ;
-
-decllist  : decl decllist 
-          | prog 
-          ;
-
-decl      : BoolDecl Ident Semicolon
-               { Compiler.AddStatement(new DeclIdentNode($2, CType.Bool)); }
-          | IntDecl Ident Semicolon
-               { Compiler.AddStatement(new DeclIdentNode($2, CType.Int)); }
-          | DoubleDecl Ident Semicolon
-               { Compiler.AddStatement(new DeclIdentNode($2, CType.Double)); }
-          ;
-
-prog      : stmnt prog
-          | CloseCurl
-               { YYACCEPT; }
-          ;
-
-stmnt     : exp Semicolon
-               {
-               Compiler.AddStatement($1);
-               Compiler.AddStatement(new SemicolonNode());
-               }
-          | blckstmnt
-               { Compiler.AddStatement(new ScopeNode()); }
-          | Return Semicolon
-               { Compiler.AddStatement(new ReturnNode()); }
-          | Write StringVal Semicolon
-               { Compiler.AddStatement(new WriteStrNode($2)); }
-          | Write exp Semicolon
-               { Compiler.AddStatement(new WriteNode($2)); }
-          | Read Ident Semicolon
-               { Compiler.AddStatement(new ReadNode($2)); }
-          ;
-
-blckstmnt : stmnt blckstmnt
-          | CloseCurl
-               { Compiler.scopes.Pop(); }
-          ;
-
-exp       : log
-          | Ident Assign exp
-               { $$ = new AssignNode($1, $3); }
-          ;
-
-log       : rel
-          | log Or rel
-               { $$ = new OrNode($1, $3); }
-          | log And rel
-               { $$ = new AndNode($1, $3); }
-          ;
-
-rel       : comp
-          | rel Equality comp
-               { $$ = new EqualityNode($1, $3); }
-          | rel NotEquality comp
-               { $$ = new NotEqualityNode($1, $3); }
-          | rel Greater comp
-               { $$ = new GreaterNode($1, $3); }
-          | rel GreaterOrE comp
-               { $$ = new GreaterOrEqualNode($1, $3); }
-          | rel Less comp
-               { $$ = new LessNode($1, $3); }
-          | rel LessOrE comp
-               { $$ = new LessOrEqualNode($1, $3); }
-          ;
-
-comp      : factor
-          | comp Plus factor
-               { $$ = new AdditionNode($1, $3); }
-          | comp Minus factor
-               { $$ = new SubtractionNode($1, $3); }
-          ;
-
-factor    : bit
-          | factor Multiplies bit
-               { $$ = new MultiplicationNode($1, $3); }
-          | factor Divides bit
-               { $$ = new DivisionNode($1, $3); }
-          ;
-
-bit       : unar
-          | bit BitOr unar
-               { $$ = new BitOrNode($1, $3); }
-          | bit BitAnd unar
-               { $$ = new BitAndNode($1, $3); }
-          ;
-
-unar      : term
-          | OpenPar IntDecl ClosePar unar
-               { $$ = new IntConversionNode($4); }
-          | OpenPar DoubleDecl ClosePar unar
-               { $$ = new DoubleConversionNode($4); }
-          | Minus unar
-               { $$ = new NegNode($2); }
-          | Not unar
-               { $$ = new BoolNegNode($2); }
-          | BitNot unar
-               { $$ = new BitNegNode($2); }
-          ;
-
-term      : OpenPar exp ClosePar
-               { $$ = $2; }
-          | True
-               { $$ = new ConstBoolLeaf(true); }
-          | False
-               { $$ = new ConstBoolLeaf(false); }
-          | IntNum
-               { $$ = new ConstIntLeaf(int.Parse($1)); }
-          | DoubleNum
-               { $$ = new ConstDoubleLeaf(double.Parse($1,System.Globalization.CultureInfo.InvariantCulture)); }
-          | Ident
-               { $$ = new IdentLeaf($1); }
-          ;
+"program"     { return (int)Tokens.Program; }
+"if"          { return (int)Tokens.If; }
+"else"        { return (int)Tokens.Else; }
+"while"       { return (int)Tokens.While; }
+"read"        { return (int)Tokens.Read; }
+"write"       { return (int)Tokens.Write; }
+"return"      { return (int)Tokens.Return; }
+"int"         { return (int)Tokens.IntDecl; }
+"double"      { return (int)Tokens.DoubleDecl; }
+"bool"        { return (int)Tokens.BoolDecl; }
+"true"        { yylval.val=yytext; return (int)Tokens.True; }
+"false"       { yylval.val=yytext; return (int)Tokens.False; }
+{IntNum}      { yylval.val=yytext; return (int)Tokens.IntNum; }
+{DoubleNum}   { yylval.val=yytext; return (int)Tokens.DoubleNum; }
+{StringVal}   { yylval.val=@yytext; return (int)Tokens.StringVal; }
+{Ident}       { yylval.val=yytext; return (int)Tokens.Ident; }
+"="           { return (int)Tokens.Assign; }
+"||"		  { return (int)Tokens.Or; }
+"&&"		  { return (int)Tokens.And; }
+"|"		      { return (int)Tokens.BitOr; }
+"&"		      { return (int)Tokens.BitAnd; }
+"=="		  { return (int)Tokens.Equality; }
+"!="		  { return (int)Tokens.NotEquality; }
+">"		      { return (int)Tokens.Greater; }
+">="		  { return (int)Tokens.GreaterOrE; }
+"<"		      { return (int)Tokens.Less; }
+"<="		  { return (int)Tokens.LessOrE; }
+"+"           { return (int)Tokens.Plus; }
+"-"           { return (int)Tokens.Minus; }
+"*"           { return (int)Tokens.Multiplies; }
+"/"           { return (int)Tokens.Divides; }
+"!"           { return (int)Tokens.Not; }
+"~"           { return (int)Tokens.BitNot; }
+"("           { return (int)Tokens.OpenPar; }
+")"           { return (int)Tokens.ClosePar; }
+"{"           { return (int)Tokens.OpenCurl; }
+"}"           { return (int)Tokens.CloseCurl; }
+";"           { return (int)Tokens.Semicolon; }
+{NewLine}     { lineno++; }
+" "           { }
+"\t"          { }
+{Comment}     { }
+//^^^^^^
+// Error: Unknown lexical category <Comment> 
+// ------------------------------------------
+<<EOF>>       { return (int)Tokens.Eof; }
+.             { return (int)Tokens.Error; }
 
 %%
 
-public Parser(Scanner scanner) : base(scanner) { }
-
+public static int lineno = 1;
 // ==========================================================================
 

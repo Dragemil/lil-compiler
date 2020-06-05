@@ -6,7 +6,7 @@ program
 
     a = 5;
     a = -~-a;
-    b = !!!b;
+    b = !!!b; //let's go
 
     write a * a;
     { return; }
