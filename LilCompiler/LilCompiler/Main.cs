@@ -15,7 +15,6 @@ public class Compiler
         new Dictionary<string, CType>();
 
     private static int labelNum = 0;
-    private static string label = null;
 
     // arg[0] określa plik źródłowy
     // pozostałe argumenty są ignorowane
@@ -81,28 +80,12 @@ public class Compiler
 
     public static void EmitCode(string instr = null)
     {
-        if (label is string lbl)
-        {
-            sw.WriteLine($"{lbl}: {instr}");
-            label = null;
-        }
-        else
-        {
-            sw.WriteLine(instr);
-        }
+        sw.WriteLine(instr);
     }
 
     public static void EmitCode(string instr, params object[] args)
     {
-        if (label is string lbl)
-        {
-            sw.WriteLine($"{lbl}: {instr}", args);
-            label = null;
-        }
-        else
-        {
-            sw.WriteLine(instr, args);
-        }
+        sw.WriteLine(instr, args);
     }
 
     public static string NextLabel()
@@ -206,8 +189,6 @@ public class ScopeNode : SyntaxNode
 
     public override void GenCode()
     {
-        //statements.Reverse();
-
         foreach (var statement in ((IEnumerable<SyntaxNode>)statements).Reverse())
         {
             statement.GenCode();

@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  DESKTOP-BGFGHK4
-// DateTime: 07.06.2020 16:28:40
+// DateTime: 07.06.2020 18:01:09
 // UserName: drage
-// Input file <mini.y - 07.06.2020 16:28:28>
+// Input file <mini.y - 07.06.2020 18:01:00>
 
 // options: lines gplex
 

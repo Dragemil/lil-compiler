@@ -34,7 +34,7 @@ class AssignNode : SyntaxNode
         var idType = Compiler.variables[id];
         var expType = exp.CheckType();
 
-        if (idType != expType || (idType != CType.Double && expType != CType.Int))
+        if (idType != expType && !(idType == CType.Double && expType == CType.Int))
         {
             throw new ErrorException($"Cannot assign {expType} to {idType}");
         }
