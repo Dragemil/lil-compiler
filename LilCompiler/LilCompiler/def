@@ -1,17 +1,23 @@
 program
 {
-    int a;
+    int i;
     bool b;
-    double c;
 
-    a = 5;
-    a = -~-a;
-    b = !!b; //let's go
+    b = !!!b;
 
-    write b && b || b;
-    { return; }
-    write a * a + a / a - a == a || a > a;
+    if (b)
+    {
+        if (!b)
+            { write "no ok"; }
+        else
+            write "Hura!\n";
+    }
+
+    while (i < 5)
+        write i = i + 1;
+    write "\n";
+
+    //write b && b || b;
     return;
-    write c;
 }
 

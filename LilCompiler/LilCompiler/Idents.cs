@@ -11,7 +11,7 @@ public class IdentLeaf : SyntaxNode
     {
         if (!Compiler.variables.ContainsKey(s))
         {
-            new Error($"Attempted to resolve undeclared variable {s}");
+            new ErrorException($"Attempted to resolve undeclared variable {s}");
         }
 
         id = s;

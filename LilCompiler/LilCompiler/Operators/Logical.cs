@@ -36,9 +36,7 @@ public class OrNode : LogicalNode
     public override void GenCode()
     {
         exp1.GenCode();
-        EmitCode("stloc btemp");
-        EmitCode("ldloc btemp");
-        EmitCode("ldloc btemp");
+        EmitCode("dup");
         EmitCode("brtrue.s {0}", label);
         exp2.GenCode();
         EmitCode(operation);
@@ -55,9 +53,7 @@ public class AndNode : LogicalNode
     public override void GenCode()
     {
         exp1.GenCode();
-        EmitCode("stloc btemp");
-        EmitCode("ldloc btemp");
-        EmitCode("ldloc btemp");
+        EmitCode("dup");
         EmitCode("brfalse.s {0}", label);
         exp2.GenCode();
         EmitCode(operation);

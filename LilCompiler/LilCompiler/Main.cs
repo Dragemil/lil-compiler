@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using GardensPoint;
+using System.Linq;
 
 public class Compiler
 {
@@ -50,7 +51,7 @@ public class Compiler
             Console.WriteLine();
             if (!parser.Parse())
             {
-                throw new ErrorException("Invalid syntax");
+                //throw new ErrorException("Invalid syntax");
             }
         }
         catch (ErrorException) { }
@@ -71,14 +72,11 @@ public class Compiler
         return errors == 0 ? 0 : 2;
     }
 
-    public static void AddStatement(SyntaxNode statement)
+    public static SyntaxNode AddStatement(SyntaxNode statement)
     {
         scopes.Peek().statements.Add(statement);
 
-        if (statement is ScopeNode scope)
-        {
-            scopes.Push(scope);
-        }
+        return statement;
     }
 
     public static void EmitCode(string instr = null)
@@ -113,7 +111,9 @@ public class Compiler
     }
 
     public static void AddLabel(string label)
-    { Compiler.label = label; }
+    {
+        sw.WriteLine("{0}: nop", label);
+    }
 
     private static StreamWriter sw;
 
@@ -144,8 +144,8 @@ public class Compiler
 
         EmitCode("// prolog");
         
-        EmitCode(".locals init ( float64 ftemp )");
-        EmitCode(".locals init ( bool btemp )");
+        //EmitCode(".locals init ( float64 ftemp )");
+        //EmitCode(".locals init ( bool btemp )");
 
         foreach(var variable in variables)
         {
@@ -188,17 +188,9 @@ public enum CType
     Bool,
 }
 
-public class Variable
-{
-    public bool assigned = false;
-    public readonly CType type;
-
-    public Variable(CType t) { type = t; }
-}
-
 public abstract class SyntaxNode
 {
-    public virtual CType CheckType() => throw new ErrorException("Type checked on a statement");
+    public virtual CType CheckType() => throw new ErrorException("Expected expression, but got statement");
     public abstract void GenCode();
 
     protected void EmitCode(string instr = null) =>
@@ -214,7 +206,9 @@ public class ScopeNode : SyntaxNode
 
     public override void GenCode()
     {
-        foreach (var statement in statements)
+        //statements.Reverse();
+
+        foreach (var statement in ((IEnumerable<SyntaxNode>)statements).Reverse())
         {
             statement.GenCode();
         }
@@ -223,8 +217,17 @@ public class ScopeNode : SyntaxNode
 
 public class SemicolonNode : SyntaxNode
 {
+    private SyntaxNode expression;
+
+    public SemicolonNode(SyntaxNode exp)
+    {
+        exp.CheckType();
+        expression = exp;
+    }
+
     public override void GenCode()
     {
+        expression.GenCode();
         EmitCode("pop");
     }
 }

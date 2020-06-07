@@ -24,42 +24,47 @@ start     : Program OpenCurl decllist Eof
           ;
 
 decllist  : decl decllist 
+               { Compiler.AddStatement($1); }
           | prog 
           ;
 
 decl      : BoolDecl Ident Semicolon
-               { Compiler.AddStatement(new DeclIdentNode($2, CType.Bool)); }
+               { $$ = new DeclIdentNode($2, CType.Bool); }
           | IntDecl Ident Semicolon
-               { Compiler.AddStatement(new DeclIdentNode($2, CType.Int)); }
+               { $$ = new DeclIdentNode($2, CType.Int); }
           | DoubleDecl Ident Semicolon
-               { Compiler.AddStatement(new DeclIdentNode($2, CType.Double)); }
+               { $$ = new DeclIdentNode($2, CType.Double); }
           ;
 
 prog      : stmnt prog
+               { Compiler.AddStatement($1); }
           | CloseCurl
-               { YYACCEPT; }
+               { /*YYACCEPT;*/ }
           ;
 
 stmnt     : exp Semicolon
-               {
-               Compiler.AddStatement($1);
-               Compiler.AddStatement(new SemicolonNode());
-               }
+               { $$ = new SemicolonNode($1); }
           | OpenCurl blckstmnt
-               { Compiler.scopes.Pop(); }
+               { Compiler.scopes.Pop(); $$ = $2; }
+          | If OpenPar exp ClosePar stmnt
+               { $$ = new IfNode($3, $5); }
+          | If OpenPar exp ClosePar stmnt Else stmnt
+               { $$ = new IfElseNode($3, $5, $7); }
+          | While OpenPar exp ClosePar stmnt
+               { $$ = new WhileNode($3, $5); }
           | Return Semicolon
-               { Compiler.AddStatement(new ReturnNode()); }
+               { $$ = new ReturnNode(); }
           | Write StringVal Semicolon
-               { Compiler.AddStatement(new WriteStrNode($2)); }
+               { $$ = new WriteStrNode($2); }
           | Write exp Semicolon
-               { Compiler.AddStatement(new WriteNode($2)); }
+               { $$ = new WriteNode($2); }
           | Read Ident Semicolon
-               { Compiler.AddStatement(new ReadNode($2)); }
+               { $$ = new ReadNode($2); }
           ;
 
 blckstmnt : stmnt blckstmnt
           | CloseCurl
-               { Compiler.AddStatement(new ScopeNode()); }
+               { var scope = new ScopeNode(); Compiler.scopes.Push(scope); $$ = scope; }
           ;
 
 exp       : log
