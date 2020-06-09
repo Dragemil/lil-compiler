@@ -50,7 +50,7 @@ public class Compiler
             Console.WriteLine();
             if (!parser.Parse())
             {
-                //throw new ErrorException("Invalid syntax");
+                throw new ErrorException("Invalid syntax");
             }
         }
         catch (ErrorException) { }

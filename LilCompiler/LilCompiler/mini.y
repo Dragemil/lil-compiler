@@ -11,7 +11,7 @@ public string      val;
 public SyntaxNode  node;
 }
 
-%token Program If Else While Read Write Semicolon Assign Eof Or And BitOr BitAnd Equality NotEquality Greater
+%token Program If Else While Read Write Semicolon Assign Or And BitOr BitAnd Equality NotEquality Greater
 %token GreaterOrE Less LessOrE Plus Minus Multiplies Divides Not BitNot OpenPar ClosePar OpenCurl CloseCurl
 %token IntDecl DoubleDecl BoolDecl Error Return
 %token <val> True False Ident IntNum DoubleNum StringVal
@@ -20,7 +20,7 @@ public SyntaxNode  node;
 
 %%
 
-start     : Program OpenCurl decllist Eof
+start     : Program OpenCurl decllist
           ;
 
 decllist  : decl decllist 
@@ -39,7 +39,7 @@ decl      : BoolDecl Ident Semicolon
 prog      : stmnt prog
                { Compiler.AddStatement($1); }
           | CloseCurl
-               { /*YYACCEPT;*/ }
+               { }
           ;
 
 stmnt     : exp Semicolon

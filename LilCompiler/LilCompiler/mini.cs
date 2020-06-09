@@ -6,9 +6,9 @@
 //
 //  GPLEX Version:  1.2.2
 //  Machine:  DESKTOP-BGFGHK4
-//  DateTime: 05.06.2020 20:09:00
+//  DateTime: 09.06.2020 10:42:09
 //  UserName: drage
-//  GPLEX input file <mini.lex - 05.06.2020 20:08:47>
+//  GPLEX input file <mini.lex - 09.06.2020 10:41:40>
 //  GPLEX frame file <embedded resource>
 //
 //  Option settings: parser, minimize
@@ -955,11 +955,6 @@ int NextState() {
     switch (state)
     {
         case eofNum:
-            switch (currentStart) {
-                case 86:
-return (int)Tokens.Eof;
-                    break;
-            }
             if (yywrap())
                 return (int)Tokens.EOF;
             break;
