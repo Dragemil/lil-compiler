@@ -39,7 +39,6 @@ decl      : BoolDecl Ident Semicolon
 prog      : stmnt prog
                { Compiler.AddStatement($1); }
           | CloseCurl
-               { }
           ;
 
 stmnt     : exp Semicolon
@@ -63,6 +62,7 @@ stmnt     : exp Semicolon
           ;
 
 blckstmnt : stmnt blckstmnt
+               { Compiler.AddStatement($1); $$ = $2; }
           | CloseCurl
                { var scope = new ScopeNode(); Compiler.scopes.Push(scope); $$ = scope; }
           ;

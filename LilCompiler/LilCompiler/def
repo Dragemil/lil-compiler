@@ -1,23 +1,10 @@
-program
-{
-    int i;
-    bool b;
-
-    b = !!!b;
-
-    if (b)
-    {
-        if (!b)
-            { write "no ok"; }
-        else
-            write "Hura!\n";
-    }
-
-    while (i < 5)
-        write i = i + 1;
-    write "\n";
-
-    //write b && b || b;
-    return;
+program{
+int a;
+a = 1;
+while(a >= 0){
+ write "Loop1";
+ write "Loop2";
+ a = a - 1;
+}
 }
 

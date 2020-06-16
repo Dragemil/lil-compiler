@@ -1,6 +1,5 @@
 program 
 {
-    write
-    "ehhh";
+    write 5 == 5.0;
 }
 

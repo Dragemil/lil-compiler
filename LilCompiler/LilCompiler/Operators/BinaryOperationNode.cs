@@ -30,16 +30,17 @@ public abstract class BinaryOperationNode : SyntaxNode
 
     public override void GenCode()
     {
-        var type = CheckType();
+        var type1 = exp1.CheckType();
+        var type2 = exp2.CheckType();
 
         exp1.GenCode();
-        if (type == CType.Double && exp1.CheckType() != CType.Double)
+        if (type2 == CType.Double && type1 != CType.Double)
         {
             EmitCode("conv.r8");
         }
 
         exp2.GenCode();
-        if (type == CType.Double && exp2.CheckType() != CType.Double)
+        if (type1 == CType.Double && type2 != CType.Double)
         {
             EmitCode("conv.r8");
         }

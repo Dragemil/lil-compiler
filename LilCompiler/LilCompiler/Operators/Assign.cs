@@ -36,7 +36,7 @@ class AssignNode : SyntaxNode
 
         if (idType != expType && !(idType == CType.Double && expType == CType.Int))
         {
-            throw new ErrorException($"Cannot assign {expType} to {idType}");
+            new Error($"Cannot assign {expType} to {idType}");
         }
 
         return idType;

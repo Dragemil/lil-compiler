@@ -57,7 +57,8 @@ public class NotEqualityNode : RelationNode
     public override void GenCode()
     {
         base.GenCode();
-        EmitCode("not");
+        EmitCode("ldc.i4 0");
+        EmitCode("ceq");
     }
 }
 
@@ -84,7 +85,8 @@ public class GreaterOrEqualNode : RelationNode
     public override void GenCode()
     {
         base.GenCode();
-        EmitCode("not");
+        EmitCode("ldc.i4 0");
+        EmitCode("ceq");
     }
 }
 
@@ -97,6 +99,7 @@ public class LessOrEqualNode : RelationNode
     public override void GenCode()
     {
         base.GenCode();
-        EmitCode("not");
+        EmitCode("ldc.i4 0");
+        EmitCode("ceq");
     }
 }

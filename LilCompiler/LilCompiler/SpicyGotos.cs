@@ -79,7 +79,7 @@ public class WhileNode : SyntaxNode
     {
         if (con.CheckType() != CType.Bool)
         {
-            new Error("If condition must return bool");
+            new Error("While condition must return bool");
         }
 
         condition = con;

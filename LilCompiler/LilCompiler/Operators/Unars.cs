@@ -128,6 +128,7 @@ public class BoolNegNode : SyntaxNode
     public override void GenCode()
     {
         exp.GenCode();
-        EmitCode("not");
+        EmitCode("ldc.i4 0");
+        EmitCode("ceq");
     }
 }

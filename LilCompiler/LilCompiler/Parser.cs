@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  DESKTOP-BGFGHK4
-// DateTime: 09.06.2020 10:50:46
+// DateTime: 16.06.2020 16:46:40
 // UserName: drage
-// Input file <mini.y - 09.06.2020 10:46:59>
+// Input file <mini.y - 16.06.2020 16:46:14>
 
 // options: lines gplex
 
@@ -269,54 +269,54 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
                { Compiler.AddStatement(ValueStack[ValueStack.Depth-2].node); }
 #line default
         break;
-      case 9: // prog -> CloseCurl
-#line 42 "mini.y"
-               { }
-#line default
-        break;
       case 10: // stmnt -> exp, Semicolon
-#line 46 "mini.y"
+#line 45 "mini.y"
                { CurrentSemanticValue.node = new SemicolonNode(ValueStack[ValueStack.Depth-2].node); }
 #line default
         break;
       case 11: // stmnt -> OpenCurl, blckstmnt
-#line 48 "mini.y"
+#line 47 "mini.y"
                { Compiler.scopes.Pop(); CurrentSemanticValue.node = ValueStack[ValueStack.Depth-1].node; }
 #line default
         break;
       case 12: // stmnt -> If, OpenPar, exp, ClosePar, stmnt
-#line 50 "mini.y"
+#line 49 "mini.y"
                { CurrentSemanticValue.node = new IfNode(ValueStack[ValueStack.Depth-3].node, ValueStack[ValueStack.Depth-1].node); }
 #line default
         break;
       case 13: // stmnt -> If, OpenPar, exp, ClosePar, stmnt, Else, stmnt
-#line 52 "mini.y"
+#line 51 "mini.y"
                { CurrentSemanticValue.node = new IfElseNode(ValueStack[ValueStack.Depth-5].node, ValueStack[ValueStack.Depth-3].node, ValueStack[ValueStack.Depth-1].node); }
 #line default
         break;
       case 14: // stmnt -> While, OpenPar, exp, ClosePar, stmnt
-#line 54 "mini.y"
+#line 53 "mini.y"
                { CurrentSemanticValue.node = new WhileNode(ValueStack[ValueStack.Depth-3].node, ValueStack[ValueStack.Depth-1].node); }
 #line default
         break;
       case 15: // stmnt -> Return, Semicolon
-#line 56 "mini.y"
+#line 55 "mini.y"
                { CurrentSemanticValue.node = new ReturnNode(); }
 #line default
         break;
       case 16: // stmnt -> Write, StringVal, Semicolon
-#line 58 "mini.y"
+#line 57 "mini.y"
                { CurrentSemanticValue.node = new WriteStrNode(ValueStack[ValueStack.Depth-2].val); }
 #line default
         break;
       case 17: // stmnt -> Write, exp, Semicolon
-#line 60 "mini.y"
+#line 59 "mini.y"
                { CurrentSemanticValue.node = new WriteNode(ValueStack[ValueStack.Depth-2].node); }
 #line default
         break;
       case 18: // stmnt -> Read, Ident, Semicolon
-#line 62 "mini.y"
+#line 61 "mini.y"
                { CurrentSemanticValue.node = new ReadNode(ValueStack[ValueStack.Depth-2].val); }
+#line default
+        break;
+      case 19: // blckstmnt -> stmnt, blckstmnt
+#line 65 "mini.y"
+               { Compiler.AddStatement(ValueStack[ValueStack.Depth-2].node); CurrentSemanticValue.node = ValueStack[ValueStack.Depth-1].node; }
 #line default
         break;
       case 20: // blckstmnt -> CloseCurl

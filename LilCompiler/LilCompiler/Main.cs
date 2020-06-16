@@ -187,6 +187,8 @@ public class ScopeNode : SyntaxNode
 {
     public List<SyntaxNode> statements = new List<SyntaxNode>();
 
+    public ScopeNode() { }
+
     public override void GenCode()
     {
         foreach (var statement in ((IEnumerable<SyntaxNode>)statements).Reverse())
