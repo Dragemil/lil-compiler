@@ -25,7 +25,7 @@ public class IfNode : SyntaxNode
     public override void GenCode()
     {
         condition.GenCode();
-        EmitCode("brfalse.s {0}", label);
+        EmitCode("brfalse {0}", label);
         statement.GenCode();
         Compiler.AddLabel(label);
     }
@@ -59,9 +59,9 @@ public class IfElseNode : SyntaxNode
     public override void GenCode()
     {
         condition.GenCode();
-        EmitCode("brfalse.s {0}", elseLabel);
+        EmitCode("brfalse {0}", elseLabel);
         ifStatement.GenCode();
-        EmitCode("br.s {0}", ifLabel);
+        EmitCode("br {0}", ifLabel);
         Compiler.AddLabel(elseLabel);
         elseStatement.GenCode();
         Compiler.AddLabel(ifLabel);
@@ -92,9 +92,9 @@ public class WhileNode : SyntaxNode
     {
         Compiler.AddLabel(startLabel);
         condition.GenCode();
-        EmitCode("brfalse.s {0}", endLabel);
+        EmitCode("brfalse {0}", endLabel);
         statement.GenCode();
-        EmitCode("br.s {0}", startLabel);
+        EmitCode("br {0}", startLabel);
         Compiler.AddLabel(endLabel);
     }
 }

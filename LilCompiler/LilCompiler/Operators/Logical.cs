@@ -37,7 +37,7 @@ public class OrNode : LogicalNode
     {
         exp1.GenCode();
         EmitCode("dup");
-        EmitCode("brtrue.s {0}", label);
+        EmitCode("brtrue {0}", label);
         exp2.GenCode();
         EmitCode(operation);
         Compiler.AddLabel(label);
@@ -54,7 +54,7 @@ public class AndNode : LogicalNode
     {
         exp1.GenCode();
         EmitCode("dup");
-        EmitCode("brfalse.s {0}", label);
+        EmitCode("brfalse {0}", label);
         exp2.GenCode();
         EmitCode(operation);
         Compiler.AddLabel(label);

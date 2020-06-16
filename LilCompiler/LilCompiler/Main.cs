@@ -14,7 +14,7 @@ public class Compiler
     public static Dictionary<string, CType> variables =
         new Dictionary<string, CType>();
 
-    private static int labelNum = 0;
+    private static int labelNum = 1;
 
     // arg[0] określa plik źródłowy
     // pozostałe argumenty są ignorowane
@@ -103,14 +103,7 @@ public class Compiler
     private static void GenCode()
     {
         GenProlog();
-
-        try
-        {
-            scopes.Peek().GenCode();
-        }
-        catch (ReturnException)
-        { }
-        
+        scopes.Peek().GenCode();
         GenEpilog();
     }
 
@@ -151,6 +144,7 @@ public class Compiler
 
     private static void GenEpilog()
     {
+        EmitCode("IL_0: nop");
         EmitCode("leave EndMain");
         EmitCode("}");
         EmitCode("catch [mscorlib]System.Exception");
@@ -218,11 +212,10 @@ public class SemicolonNode : SyntaxNode
 public class ReturnNode : SyntaxNode
 {
     public override void GenCode()
-    { throw new ReturnException(); }
+    {
+        EmitCode("br IL_0");
+    }
 }
-
-public class ReturnException : Exception
-{ }
 
 public class Error
 {
