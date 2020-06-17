@@ -4,7 +4,7 @@
 
 IntNum      ([1-9][0-9]*|0)
 DoubleNum   ([1-9][0-9]*|0)\.[0-9]+
-StringVal   \"[^\r\n]*\"
+StringVal   \"(?:\.|(\\\")|[^\""\n])*\"
 Ident       [a-zA-Z][a-zA-Z0-9]*
 NewLine     (\r\n?|\n)
 Comment     \/\/[^\r\n]*
