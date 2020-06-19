@@ -4,7 +4,7 @@
 // ==========================================================================
 //  Version:  1.2.2
 //  Machine:  DESKTOP-BGFGHK4
-//  DateTime: 05.06.2020 20:01:49
+//  DateTime: 19.06.2020 18:22:17
 //  UserName: drage
 // ==========================================================================
 
@@ -15,15 +15,12 @@
 
 IntNum      ([1-9][0-9]*|0)
 DoubleNum   ([1-9][0-9]*|0)\.[0-9]+
-StringVal   \"[^\r\n]*\"
+StringVal   \"(?:\.|(\\\")|[^\""\n])*\"
 Ident       [a-zA-Z][a-zA-Z0-9]*
 NewLine     (\r\n?|\n)
-Comment     //[^\r\n]*NewLine
+Comment     \/\/[^\r\n]*
 
 %%
-// Error: Parser error <Syntax error, unexpected %%, expecting verbatim, or pattern> 
-// Error: Unexpected symbol, skipping to  <%%> 
-// ----------------------------------------------------------------------------------
 
 "program"     { return (int)Tokens.Program; }
 "if"          { return (int)Tokens.If; }
@@ -41,6 +38,9 @@ Comment     //[^\r\n]*NewLine
 {DoubleNum}   { yylval.val=yytext; return (int)Tokens.DoubleNum; }
 {StringVal}   { yylval.val=@yytext; return (int)Tokens.StringVal; }
 {Ident}       { yylval.val=yytext; return (int)Tokens.Ident; }
+//^^^^^
+// Warning: This pattern always overrides "error" 
+// -----------------------------------------------
 "="           { return (int)Tokens.Assign; }
 "||"		  { return (int)Tokens.Or; }
 "&&"		  { return (int)Tokens.And; }
@@ -67,11 +67,10 @@ Comment     //[^\r\n]*NewLine
 " "           { }
 "\t"          { }
 {Comment}     { }
-//^^^^^^
-// Error: Unknown lexical category <Comment> 
-// ------------------------------------------
-<<EOF>>       { return (int)Tokens.Eof; }
-.             { return (int)Tokens.Error; }
+error         { new Error("Invalid syntax"); }
+//^^^
+// Warning: This pattern always overridden by "{Ident}" 
+// -----------------------------------------------------
 
 %%
 

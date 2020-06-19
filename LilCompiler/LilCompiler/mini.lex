@@ -53,7 +53,6 @@ Comment     \/\/[^\r\n]*
 " "           { }
 "\t"          { }
 {Comment}     { }
-.             { return (int)Tokens.Error; }
 
 %%
 

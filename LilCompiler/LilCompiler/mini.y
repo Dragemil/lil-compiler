@@ -13,7 +13,7 @@ public SyntaxNode  node;
 
 %token Program If Else While Read Write Semicolon Assign Or And BitOr BitAnd Equality NotEquality Greater
 %token GreaterOrE Less LessOrE Plus Minus Multiplies Divides Not BitNot OpenPar ClosePar OpenCurl CloseCurl
-%token IntDecl DoubleDecl BoolDecl Error Return
+%token IntDecl DoubleDecl BoolDecl Return
 %token <val> True False Ident IntNum DoubleNum StringVal
 
 %type <node> decllist decl prog stmnt blckstmnt exp log rel comp factor bit unar term
@@ -25,7 +25,7 @@ start     : Program OpenCurl decllist
 
 decllist  : decl decllist 
                { Compiler.AddStatement($1); }
-          | prog 
+          | prog
           ;
 
 decl      : BoolDecl Ident Semicolon
@@ -59,6 +59,8 @@ stmnt     : exp Semicolon
                { $$ = new WriteNode($2); }
           | Read Ident Semicolon
                { $$ = new ReadNode($2); }
+          | error Semicolon
+               { new Error("Invalid syntax"); }
           ;
 
 blckstmnt : stmnt blckstmnt
