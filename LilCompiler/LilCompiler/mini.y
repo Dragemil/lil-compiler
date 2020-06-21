@@ -34,6 +34,8 @@ decl      : BoolDecl Ident Semicolon
                { $$ = new DeclIdentNode($2, CType.Int); }
           | DoubleDecl Ident Semicolon
                { $$ = new DeclIdentNode($2, CType.Double); }
+          | error
+               { new Error("Invalid syntax"); }
           ;
 
 prog      : stmnt prog

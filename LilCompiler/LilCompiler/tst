@@ -1,12 +1,14 @@
 program 
 {
     int a;
+    int b
+
     int a;
 
     {wRite "";
     {
         wRite "";
-
+        1 + 2
     }
     }
     
@@ -14,5 +16,6 @@ program
     
     write "ok2";
     wRite "";
-
+    1 + 2
+}
 
