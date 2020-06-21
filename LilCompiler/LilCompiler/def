@@ -1,5 +1,4 @@
 program{
-    return;
-    write "ok";
+    write "\n";
 }
 
