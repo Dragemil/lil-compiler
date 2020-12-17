@@ -49,26 +49,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Operators\Assign.cs" />
-    <Compile Include="Operators\BinaryOperationNode.cs" />
-    <Compile Include="Operators\Bit.cs" />
-    <Compile Include="Consts.cs" />
-    <Compile Include="Idents.cs" />
-    <Compile Include="IO.cs" />
+    <Compile Include="kompilator.cs" />
     <Compile Include="Main.cs" />
-    <Compile Include="mini.cs" />
-    <Compile Include="Operators\Calculation.cs" />
-    <Compile Include="Operators\Logical.cs" />
-    <Compile Include="Operators\Relation.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Operators\Unars.cs" />
-    <Compile Include="SpicyGotos.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="mini.lex" />
-    <None Include="mini.y" />
+    <None Include="kompilator.lex" />
+    <None Include="kompilator.y" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Operators\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
